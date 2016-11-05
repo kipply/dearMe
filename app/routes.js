@@ -7,6 +7,7 @@ module.exports = function(app, passport) {
 
     app.get('/', function(req, res) {   
 
+
         fs.readFile('diary.txt', 'utf8', function(err, contents) {
             date = contents.split('\n')[0]; 
             contents = contents.replace(date, ""); 
@@ -19,6 +20,22 @@ module.exports = function(app, passport) {
 
             console.log(year);
             console.log(entry);
+
+            indico.personas('onetuhoentuhoentuhoenthuonetuh I\'m a bird').then(function(res){
+                console.log(res); 
+                User.update({_id: req.user._id}, {
+
+                    data:{persona:[2,2,2,2,2,2,2]}
+
+                }, function(err, numberAffected, rawResponse) {
+                   //handle it
+                })
+            })
+              .catch(function(err){
+                console.log('err: ', err);
+              })
+              console.log(req.user)
+
 
         });
         res.render('index.pug');
@@ -64,7 +81,7 @@ module.exports = function(app, passport) {
         Entry.find({userID: req.user._id}).exec(function(err, entries) {
             if (err) throw err;
             res.render('journal.pug', {
-                user: req.user,
+                user:req.user,
                 entries: entries
             });     
         });
@@ -115,7 +132,7 @@ module.exports = function(app, passport) {
                     day: today.getDay(), 
                 },
                 data:{
-                    emotion:res.joy
+                    emotion:res.joy,
                 }
             })
             newEntry.save(function(err) {
@@ -126,11 +143,11 @@ module.exports = function(app, passport) {
 
             indico.personas('onetuhoentuhoentuhoenthuonetuh I\'m a bird').then(function(res){
                 console.log(res); 
-                User.update({entry:{ html:req.body.entry,}}, {
+                User.update({_id: req.user._id}, {
                     
                 }, function(err, numberAffected, rawResponse) {
                    //handle it
-})
+                })
             })
               .catch(function(err){
                 console.log('err: ', err);

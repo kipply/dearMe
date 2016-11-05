@@ -26,7 +26,6 @@ var userSchema = mongoose.Schema({
   // entertainer
   // defender
   // virtuoso: 
-
     }
 });
 
