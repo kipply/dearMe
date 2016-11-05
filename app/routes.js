@@ -158,7 +158,52 @@ module.exports = function(app, passport) {
             })
 
         )
+        
+        
+        var spawn = require('child_process').spawn;
+        child = spawn('java', ['-jar', 'SentimentCore.jar']);
 
+        child.stdin.setEncoding('utf-8');
+        child.stdout.pipe(process.stdout);
+
+        child.stdin.write(req.body.entry + "\n");
+        child.stdin.write("EOF\n");
+
+        var jsonObj;
+        child.stdout.on('data', function (data) {
+          jsonObj = JSON.parse(data.toString());
+        });
+
+        var entities = jsonObj.Entities;
+
+        for (var i = 0; i < entities.length; i++) {
+            var entity = entities[i];
+
+            var curEntities = req.user.data.entities;
+            for (var j = 0; j < curEntities.length; j++) {
+                var curEntity = curEntities[j];
+                if (entity.form === curEntity.form) {
+                    var curCount = curEntity.count;
+                    curEntities[j].count = curCount+1;
+                    User.update({_id: req.user_id}, {
+                        data:{entities:curEntities}
+                    }, function(err, numberAffected, rawResponse){})
+                }else{
+                    var newEntity = {
+                        count : 1,
+                        form : entity.form,
+                        isPerson : entity.isPerson,
+                        sentiment : entity.sentiment
+                    };
+                    curEntities.push(newEntity);
+                    User.update({_id: req.user_id}, {
+                        data:{entities:curEntities}
+                    }, function(err, numberAffected, rawResponse){})
+                }
+            }
+        }
+
+        
         req.flash('info', 'Flash is back!');
         res.redirect('/profile')
 
