@@ -1,6 +1,7 @@
 var Entry = require('../app/models/entry');
 var User = require('../app/models/user');
 var fs = require('fs');
+var indico = require('indico.io'); 
 
 module.exports = function(app, passport) {
 
@@ -18,11 +19,16 @@ module.exports = function(app, passport) {
 
     app.get('/profile', isLoggedIn, function(req, res) {
         arr= [12, 19, 3, 5, 2, 3];
-        res.render('profile.pug', {
-            user : req.user, 
-            messages: req.flash('info'),
-            data: arr
+
+        Entry.find({userID: req.user._id}).exec(function(err, entries) {
+            if (err) throw err;
+            res.render('profile.pug', {
+                user: req.user,
+                messages: req.flash('info'),
+                entries: entries
+            });     
         });
+
     });
 
     app.get('/journal', isLoggedIn, function(req, res) {
@@ -62,27 +68,64 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
-    app.post('/submitEntry',function(req, res) {
+    app.post('/submitEntry', isLoggedIn, function(req, res) {
         today = new Date();
-        newEntry = Entry({
-            userID: req.user._id,
-            entry: {
-                plaintext: req.body.entry.replace(/<(?:.|\n)*?>/gm, ''),
-                html: req.body.entry,
-            }, 
-            date:{ 
-                year: today.getFullYear(),
-                month: today.getMonth() + 1, 
-                date: today.getDate(),
-                day: today.getDay(), 
+        var temp = []; 
+        var tempo = [];
+        tempo.length = 6;
+        temp.length = 6; 
+        for (i = 0; i < 6; i++){
+            temp[i] = 0;
+            tempo[i] = "";
+        }
+        indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
+        indico.personas(req.body.entry).then(function(res){
+
+            for (var key in res) {
+                for (i = 0; i < 6; i++){
+
+                    if (res[key] > temp[i]) {
+                        temp[i] = res[key];
+                        tempo[i] = key;
+                        i = i + 7;
+                    } 
+                }
             }
+            console.log (JSON.stringify(temp) + "\n" + JSON.stringify(tempo));
+            // console.log(persona);
+        }).then(function(){
+            
+            newEntry = Entry({
+                userID: req.user._id,
+                entry: {
+                    plaintext: req.body.entry.replace(/<(?:.|\n)*?>/gm, ''),
+                    html: req.body.entry,
+                }, 
+                date:{ 
+                    year: today.getFullYear(),
+                    month: today.getMonth() + 1, 
+                    date: today.getDate(),
+                    day: today.getDay(), 
+                },
+                data:{
+                    persona: {
+                        values: temp, 
+                        name: tempo
+                    }
+                }
+            })
+
+            newEntry.save(function(err) {
+              if (err) throw err;
+            });
         })
-        newEntry.save(function(err) {
-          if (err) throw err;
-        });
+    .catch(function(err){
+      console.log('err: ', err);
+    })
 
         req.flash('info', 'Flash is back!');
         res.redirect('/profile')
+
     });
 };
 
@@ -102,4 +145,12 @@ function isLoggedIn(req, res, next) {
         return next();
 
     res.redirect('/');
+}        
+
+function persona(entry){
+
+    var top = "";
+    indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
+
+    console.log(top);
 }

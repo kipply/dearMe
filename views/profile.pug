@@ -40,6 +40,7 @@ html
               span=user.local.password
         .col-sm-6
           //sample chart
+          p=entries[2]
           canvas#myChart
             script.
               var ctx = document.getElementById("myChart");
@@ -49,7 +50,7 @@ html
                   labels: ["Lorem", "ipsum", "dolor", "sit", "amet", "consecteteur"],
                   datasets: [{
                     label: 'adipiscing',
-                    data: [#{data}],
+                    data: [#{boodata}],
                     backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',

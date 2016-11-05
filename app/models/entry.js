@@ -13,6 +13,12 @@ var entrySchema = mongoose.Schema({
     	month: Number, 
     	date: Number,
     	day: Number,
+    }, 
+    data:{
+        persona: {
+            values: Array, 
+            name: Array
+        }
     }
 });
 
