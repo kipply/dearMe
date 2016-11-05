@@ -13,6 +13,7 @@ html
     .container
       .page-header.text-center
         h1
+
           span.fa.fa-anchor
           |  Profile Page
         a.btn.btn-default.btn-sm(href='/logout') Logout
@@ -39,19 +40,22 @@ html
               | : 
               span=user.local.password
         .col-sm-6
-          canvas#myChart
+
+          canvas#mood
             script.
 
               var actualDates = [];
+              var actualLegend = [];
               var i = 0; 
 
               for (i = 0; i <#{dates.length}; i++){
                 actualDates[i] = "#{dates}".split(",")[i];
-                }
+                actualLegend[i] = "#{legend}".split(",")[0];
+              }
 
 
-              var ctx = document.getElementById("myChart");
-              var myChart = new Chart(ctx, {
+              var ctx = document.getElementById("mood");
+              var mood = new Chart(ctx, {
                 type: 'line',
                 data: {
                   labels:  actualDates,
@@ -92,6 +96,46 @@ html
 
                     yAxes: [{
                         stacked: true
+                    }]
+                  },
+                }
+              });
+        .row
+          canvas#personality
+            script.
+
+              var ctx = document.getElementById("personality");
+              var personality = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                labels: actualLegend,
+              datasets: [
+                {
+                    label: "My Personality",
+                    backgroundColor: "rgba(179,181,198,0.2)",
+                    borderColor: "rgba(179,181,198,1)",
+                    pointBackgroundColor: "rgba(179,181,198,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(179,181,198,1)",
+                    data: [#{personasix}]
+                }
+              ]
+                        },
+                options: {
+
+                  hover: {
+                      // Overrides the global setting
+                      mode: 'label'
+                  },
+                  scales: {
+                    xAxes: [{
+                        display: false,
+                        color: 
+                    }],
+
+                    yAxes: [{
+                        display: false
                     }]
                   },
                 }

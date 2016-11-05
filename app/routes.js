@@ -21,22 +21,6 @@ module.exports = function(app, passport) {
             console.log(year);
             console.log(entry);
 
-            indico.personas('onetuhoentuhoentuhoenthuonetuh I\'m a bird').then(function(res){
-                console.log(res); 
-                User.update({_id: req.user._id}, {
-
-                    data:{persona:[2,2,2,2,2,2,2]}
-
-                }, function(err, numberAffected, rawResponse) {
-                   //handle it
-                })
-            })
-              .catch(function(err){
-                console.log('err: ', err);
-              })
-              console.log(req.user)
-
-
         });
         res.render('index.pug');
     });
@@ -52,6 +36,18 @@ module.exports = function(app, passport) {
         app.get('/profile', isLoggedIn, function(req, res) {
             arr = []; 
             datees = []; 
+            booparr = [];
+            legend = []; 
+            console.log(req.user.data.persona);
+            booparr = req.user.data.persona.splice(1,booparr.length);
+            console.log(booparr);
+            for (var i = 0; i < 8; i++){
+                var lock = booparr.indexOf(Math.min(booparr)); 
+                booparr = booparr.splice(lock, lock+1);
+
+            console.log(booparr)
+            }
+            console.log(booparr)
             Entry.find({userID: req.user._id}).exec(function(err, entries) {
 
             arr.length = entries.length; 
@@ -62,13 +58,13 @@ module.exports = function(app, passport) {
                 datees[i] = entries[i].date.month+"/"+entries[i].date.date+"/"+entries[i].date.year;
             }
             arr = arr.reverse();
-            console.log(datees);
-            console.log(arr);
             if (err) throw err;
             res.render('profile.pug', {
                 user: req.user,
                 messages: req.flash('info'),
                 entries: entries,
+                personasix: booparr, 
+                legend: legend,
                 emotionDataJoy: arr, 
                 dates: datees
             });     
@@ -141,17 +137,34 @@ module.exports = function(app, passport) {
         })
         .then(
 
-            indico.personas('onetuhoentuhoentuhoenthuonetuh I\'m a bird').then(function(res){
-                console.log(res); 
+            indico.personas(req.body.entry).then(function(res){
+                arr = req.user.data.persona;
+                console.log(arr);
+                arr[0]++; 
+                arr[1] += res.debater;
+                arr[2] += res.mediator; 
+                arr[3] += res.consul; 
+                arr[4] += res.executive; 
+                arr[5] += res.adventurer;
+                arr[6] += res.logistician; 
+                arr[7] += res.commander; 
+                arr[8] += res.entrepreneur; 
+                arr[9] += res.entrepreneur; 
+                arr[10] += res.logician; 
+                arr[11] += res.protagonist; 
+                arr[12] += res.architect; 
+                arr[13] += res.campaigner;
+                arr[14] += res.entertainer;
+                arr[15] += res.defender; 
+                arr[16] += res.virtuoso;
                 User.update({_id: req.user._id}, {
-                    
+                    data:{persona: arr}
                 }, function(err, numberAffected, rawResponse) {
                    //handle it
                 })
+                console.log(arr)
             })
-              .catch(function(err){
-                console.log('err: ', err);
-              })
+
         )
 
         req.flash('info', 'Flash is back!');
