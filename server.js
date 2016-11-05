@@ -20,25 +20,8 @@ var configDB = require('./config/database.js');
 
 var answer;
 
-        indico.emotion('Guns don\'t kill people. People kill people.').then(function(res){
-            console.log(res.joy); 
-     		
-            newEntry = Entry({
-                userID: req.user._id,
-                entry: {
-                    plaintext: req.body.entry.replace(/<(?:.|\n)*?>/gm, ''),
-                    html: req.body.entry,
-                }, 
-                date:{ 
-                    year: today.getFullYear(),
-                    month: today.getMonth() + 1, 
-                    date: today.getDate(),
-                    day: today.getDay(), 
-                },
-                data:{
-                    emotion: res.joy
-                }
-            })
+        indico.personas('onetuhoentuhoentuhoenthuonetuh I\'m a bird').then(function(res){
+            console.log(res); 
         })
           .catch(function(err){
             console.log('err: ', err);

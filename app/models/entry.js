@@ -15,7 +15,10 @@ var entrySchema = mongoose.Schema({
     	day: Number,
     }, 
     data:{
-        emotion: Number,
+        emotion:{
+            joy: Number, 
+            fear: Number
+        }
     }
 });
 

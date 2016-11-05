@@ -34,6 +34,7 @@ module.exports = function(app, passport) {
 
         app.get('/profile', isLoggedIn, function(req, res) {
             arr = []; 
+            fearArr= [];
             datees = []; 
             Entry.find({userID: req.user._id}).exec(function(err, entries) {
 
@@ -41,7 +42,8 @@ module.exports = function(app, passport) {
             datees.length = entries.length;
             for (i = 0; i < entries.length; i++){
                 datees[i] = "";
-                arr[i] = entries[i].data.emotion;
+                arr[i] = entries[i].data.emotion.joy;
+                arr[i] = entries[i].data.emotion.fear;
                 datees[i] = entries[i].date.month+"/"+entries[i].date.date+"/"+entries[i].date.year;
             }
             arr = arr.reverse();
@@ -52,7 +54,8 @@ module.exports = function(app, passport) {
                 user: req.user,
                 messages: req.flash('info'),
                 entries: entries,
-                data: arr, 
+                emotionDataJoy: arr, 
+                emotionDataFear: fearArr,
                 dates: datees
             });     
         });
@@ -101,7 +104,7 @@ module.exports = function(app, passport) {
 
         indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
         indico.emotion(req.body.entry).then(function(res){
-            console.log(res.joy);  
+            console.log(res.joy);     
             newEntry = Entry({
                 userID: req.user._id,
                 entry: {
@@ -115,7 +118,10 @@ module.exports = function(app, passport) {
                     day: today.getDay(), 
                 },
                 data:{
-                    emotion: res.joy
+                    emotion:{
+                        joy: res.joy, 
+                        fear: res.fear
+                    }
                 }
             })
             newEntry.save(function(err) {
@@ -123,9 +129,10 @@ module.exports = function(app, passport) {
             });
         })
         .then(
-
-            )
-
+            indico.personas(req.body.entry).then(function(res){
+            console.log(res);  
+            })
+        )
 
         req.flash('info', 'Flash is back!');
         res.redirect('/profile')

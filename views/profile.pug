@@ -39,20 +39,26 @@ html
               | : 
               span=user.local.password
         .col-sm-6
-          //sample char
-          p=dates
           canvas#myChart
             script.
+
+              var actualDates = [];
+              var i = 0; 
+
+              for (i = 0; i <#{dates.length}; i++){
+                actualDates[i] = "#{dates}".split(",")[i];
+                }
+
+
               var ctx = document.getElementById("myChart");
               var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                  labels: [#{dates}],
-                  datasets: [
+                  labels:  actualDates,
+                  datasets : [
                       {
                           label: "My Mood",
-                          fill: false,
-                          data: [#{data}],
+                          data: [#{emotionDataJoy}],
                           lineTension: 0.1,
                           backgroundColor: "rgba(75,192,192,0.4)",
                           borderColor: "rgba(75,192,192,1)",
@@ -81,7 +87,12 @@ html
                   },
                   scales: {
                     xAxes: [{
+                        display: false
                     }],
+
+                    yAxes: [{
+                        stacked: true
+                    }]
                   },
                 }
               });
