@@ -34,7 +34,6 @@ module.exports = function(app, passport) {
 
         app.get('/profile', isLoggedIn, function(req, res) {
             arr = []; 
-            fearArr= [];
             datees = []; 
             Entry.find({userID: req.user._id}).exec(function(err, entries) {
 
@@ -42,8 +41,7 @@ module.exports = function(app, passport) {
             datees.length = entries.length;
             for (i = 0; i < entries.length; i++){
                 datees[i] = "";
-                arr[i] = entries[i].data.emotion.joy;
-                arr[i] = entries[i].data.emotion.fear;
+                arr[i] = entries[i].data.emotion;
                 datees[i] = entries[i].date.month+"/"+entries[i].date.date+"/"+entries[i].date.year;
             }
             arr = arr.reverse();
@@ -55,7 +53,6 @@ module.exports = function(app, passport) {
                 messages: req.flash('info'),
                 entries: entries,
                 emotionDataJoy: arr, 
-                emotionDataFear: fearArr,
                 dates: datees
             });     
         });
@@ -118,10 +115,7 @@ module.exports = function(app, passport) {
                     day: today.getDay(), 
                 },
                 data:{
-                    emotion:{
-                        joy: res.joy, 
-                        fear: res.fear
-                    }
+                    emotion:res.joy
                 }
             })
             newEntry.save(function(err) {
@@ -129,9 +123,18 @@ module.exports = function(app, passport) {
             });
         })
         .then(
-            indico.personas(req.body.entry).then(function(res){
-            console.log(res);  
+
+            indico.personas('onetuhoentuhoentuhoenthuonetuh I\'m a bird').then(function(res){
+                console.log(res); 
+                User.update({entry:{ html:req.body.entry,}}, {
+                    
+                }, function(err, numberAffected, rawResponse) {
+                   //handle it
+})
             })
+              .catch(function(err){
+                console.log('err: ', err);
+              })
         )
 
         req.flash('info', 'Flash is back!');

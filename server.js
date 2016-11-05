@@ -20,14 +20,6 @@ var configDB = require('./config/database.js');
 
 var answer;
 
-        indico.personas('onetuhoentuhoentuhoenthuonetuh I\'m a bird').then(function(res){
-            console.log(res); 
-        })
-          .catch(function(err){
-            console.log('err: ', err);
-          })
-          .then()
-        console.log(answer);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(configDB.url); 
