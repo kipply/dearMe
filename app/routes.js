@@ -60,6 +60,30 @@ module.exports = function(app, passport) {
                 emotionDataJoy: arr, 
                 dates: datees
             });     
+                
+           
+            var personasDB = req.user.data.personas;
+
+            var topPersonasVals = [];
+            var topPersonasNames = [];
+
+            var types = ["", "advocate", "debater", "mediator", "consul", "executive", "adventurer", "logistician", "commander",
+            "entrepreneur", "logician", "protagonist", "architect", "campaigner", "entertainer", "defender", "virtuoso"];
+
+            var preNum = -1;
+            for (var i = 0; i < 6; i++) {
+                var max = -1;
+                var maxName = "";
+                for (var j = 1; j <= personasDB.length; j++) {
+                    if (personasDB[j]>max&&personasDB[j]<=preNum) {
+                        max = personasDB[j];
+                        maxName = types[j];
+                    }
+                }
+                topPersonasNames.push(maxName);
+                topPersonasVals.push(max);
+                preNum = max;
+            }
         });
 
     });
