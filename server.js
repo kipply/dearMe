@@ -1,5 +1,9 @@
 
 
+
+var indico = require('indico.io'); 
+
+indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
 var express = require('express'); 
 var app = express(); 
 var port = process.env.PORT || 8000; 
@@ -14,6 +18,34 @@ var session = require('express-session');
 
 var configDB = require('./config/database.js'); 
 
+var answer;
+
+        indico.emotion('Guns don\'t kill people. People kill people.').then(function(res){
+            console.log(res.joy); 
+     		
+            newEntry = Entry({
+                userID: req.user._id,
+                entry: {
+                    plaintext: req.body.entry.replace(/<(?:.|\n)*?>/gm, ''),
+                    html: req.body.entry,
+                }, 
+                date:{ 
+                    year: today.getFullYear(),
+                    month: today.getMonth() + 1, 
+                    date: today.getDate(),
+                    day: today.getDay(), 
+                },
+                data:{
+                    emotion: res.joy
+                }
+            })
+        })
+          .catch(function(err){
+            console.log('err: ', err);
+          })
+          .then()
+        console.log(answer);
+
 mongoose.Promise = global.Promise;
 mongoose.connect(configDB.url); 
 
@@ -27,6 +59,8 @@ app.use(session({secret: 'dearmehorsebatterystaple'}));
 app.use(passport.initialize()); 
 app.use(passport.session()); 
 app.use(flash()); 
+
+app.use(express.static(__dirname + '/views'));
 
 require('./app/routes.js')(app, passport); 
 require('./config/passport')(passport);
