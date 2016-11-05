@@ -78,6 +78,7 @@ module.exports = function(app, passport) {
             temp[i] = 0;
             tempo[i] = "";
         }
+
         indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
         indico.personas(req.body.entry).then(function(res){
 
@@ -95,6 +96,8 @@ module.exports = function(app, passport) {
             // console.log(persona);
         }).then(function(){
             
+        });
+
             newEntry = Entry({
                 userID: req.user._id,
                 entry: {
@@ -118,10 +121,7 @@ module.exports = function(app, passport) {
             newEntry.save(function(err) {
               if (err) throw err;
             });
-        })
-    .catch(function(err){
-      console.log('err: ', err);
-    })
+
 
         req.flash('info', 'Flash is back!');
         res.redirect('/profile')
@@ -146,11 +146,3 @@ function isLoggedIn(req, res, next) {
 
     res.redirect('/');
 }        
-
-function persona(entry){
-
-    var top = "";
-    indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
-
-    console.log(top);
-}

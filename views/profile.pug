@@ -40,9 +40,14 @@ html
               span=user.local.password
         .col-sm-6
           //sample chart
-          p=entries
+          p=entries[0]
           canvas#myChart
             script.
+              var topsix = []; 
+              topsix.length = 6;
+              for (i = 0; i < entries.length; i++){
+                entries[i].data.persona.
+              }
               var ctx = document.getElementById("myChart");
               var myChart = new Chart(ctx, {
                 type: 'bar',
