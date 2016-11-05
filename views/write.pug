@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+
+    title Uses TinyMCE
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
+    script(src='//cdn.tinymce.com/4/tinymce.min.js')
+    script.
+      tinymce.init({ selector:'textarea' });
+  body
+    .container
+      .page-header.text-center
+        h1
+          span.fa.fa-anchor
+          |  Journals
+        a.btn.btn-default.btn-sm(href='/logout') Logout
+        a.btn.btn-default.btn-sm(href='/profile') Profile
+
+    form(action = '/submitEntry', method = 'post')
+      textarea(name='entry')
+      button(type='submit') Send!

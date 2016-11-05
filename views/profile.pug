@@ -1,0 +1,81 @@
+doctype html
+html
+  head
+    title ChartsJS
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js')
+    script.
+      var myChart = new Chart({...});
+    style.
+      body        { padding-top:80px; word-wrap:break-word; }
+  body
+    .container
+      .page-header.text-center
+        h1
+          span.fa.fa-anchor
+          |  Profile Page
+        a.btn.btn-default.btn-sm(href='/logout') Logout
+        a.btn.btn-default.btn-sm(href='/journal') Journal
+      .row
+        if messages.length > 0
+          .alert.alert-success=messages
+        // LOCAL INFORMATION
+        .col-sm-6
+          .well
+            h3
+              span.fa.fa-user
+              |  Local
+            p
+              strong id
+              | : 
+              span=user.id
+              br
+              strong email
+              | : 
+              span=user.local.email
+              br
+              strong password
+              | : 
+              span=user.local.password
+        .col-sm-6
+          //sample chart
+          canvas#myChart
+            script.
+              var ctx = document.getElementById("myChart");
+              var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: ["Lorem", "ipsum", "dolor", "sit", "amet", "consecteteur"],
+                  datasets: [{
+                    label: 'adipiscing',
+                    data: [#{data}],
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(255,99,132,1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        beginAtZero:true
+                      }
+                    }]
+                  }
+                }
+              });
