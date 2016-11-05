@@ -39,15 +39,7 @@ module.exports = function(app, passport) {
             booparr = [];
             legend = []; 
             console.log(req.user.data.persona);
-            booparr = req.user.data.persona.splice(1,booparr.length);
-            console.log(booparr);
-            for (var i = 0; i < 8; i++){
-                var lock = booparr.indexOf(Math.min(booparr)); 
-                booparr = booparr.splice(lock, lock+1);
-
-            console.log(booparr)
-            }
-            console.log(booparr)
+            
             Entry.find({userID: req.user._id}).exec(function(err, entries) {
 
             arr.length = entries.length; 
