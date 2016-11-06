@@ -1,0 +1,70 @@
+html, body{
+  height: 100%;
+  width: 100%;
+  background-color: #C2C2F0;
+  background: linear-gradient(262deg, #C2C2F0, #f0c2c2, #c2d9f0, #C2C2F0);
+  background-size: 400% 400%;
+  -webkit-animation: colorChange 16s ease infinite;
+  -moz-animation: colorChange 16s ease infinite;
+  animation: colorChange 16s ease infinite;
+}
+
+form {
+  width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 20px;
+  position: relative;;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  border-radius: 20px;
+}
+
+.btn, button {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+button {
+  margin-top: 10px;
+  background-color: lightblue;
+  color: white;
+  padding: 10px 20px;
+}
+
+a:link, a:visited {
+    background-color: lightblue;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+a:hover, a:active {
+    background-color: lightgreen;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 10%;
+  color: #fff;
+}
+
+@-webkit-keyframes colorChange {
+    0%{background-position:0% 43%}
+    50%{background-position:100% 58%}
+    100%{background-position:0% 43%}
+}
+@-moz-keyframes colorChange {
+    0%{background-position:0% 43%}
+    50%{background-position:100% 58%}
+    100%{background-position:0% 43%}
+}
+@keyframes colorChange {
+    0%{background-position:0% 43%}
+    50%{background-position:100% 58%}
+    100%{background-position:0% 43%}
+}

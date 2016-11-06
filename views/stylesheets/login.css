@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-decoration: none;
+  outline: none;
+}
+
+html, body {
+	height: 100%;
+}
+
+body,
+a {
+  font-family: calibri;
+  font-size: 14px;
+  font-weight: normal;
+  color: #3b424d;
+}
+
+.main-wrap {
+  display: flex;
+	flex-direction: column;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	background: #5DC0C6;
+  background: linear-gradient(262deg, #243166, #5be1d6,  #5DC0C6, #C2C2F0, #f0f0c2);
+  background-size: 400% 400%;
+  -webkit-animation: colorChange 8s ease infinite;
+  -moz-animation: colorChange 8s ease infinite;
+  animation: colorChange 8s ease infinite;
+}
+
+form {
+  width: 300px;
+  margin: 0 auto;
+  background: #ff7e68;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;;
+  padding: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px;
+}
+
+form p {
+  text-indent: 10px;
+}
+
+.box1 {
+  background: #ffd5ce;
+  height: 40px;
+  text-indent: 10px;
+  width: 90%;
+  margin-bottom: 3px;
+  color: #3b424d;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.border1 {
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -ms-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+}
+
+.border2 {
+  -webkit-border-radius: 0px 0 5px 5px;
+  -moz-border-radius: 0px 0 5px 5px;
+  -ms-border-radius: 0px 0 5px 5px;
+  border-radius: 0px 0 5px 5px;
+}
+
+.send {
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  position: absolute;
+  right: 9px;
+  top: 20px;
+  border: 5px solid #ff7e68;
+  background: #ff5335;
+  font-size: 18px;
+  color: #fff;
+  font-weight: normal;
+  text-shadow: 1px 1px 2px #000;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.send:hover {
+  animation: spin 0.3s ease-in-out;
+  -webkit-animation: spin 0.3s ease-in-out;
+  -moz-animation: spin 0.3s ease-in-out;
+  -ms-animation: spin 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+h1, h2, p {
+  text-align: center;
+  color: #fff;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+@-webkit-keyframes colorChange {
+    0%{background-position:0% 43%}
+    50%{background-position:100% 58%}
+    100%{background-position:0% 43%}
+}
+@-moz-keyframes colorChange {
+    0%{background-position:0% 43%}
+    50%{background-position:100% 58%}
+    100%{background-position:0% 43%}
+}
+@keyframes colorChange {
+    0%{background-position:0% 43%}
+    50%{background-position:100% 58%}
+    100%{background-position:0% 43%}
+}

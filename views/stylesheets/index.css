@@ -1,0 +1,131 @@
+/* LANDING CSS */
+.landing {
+  height: 100vh;
+  padding-top: 2%;
+  box-sizing: border-box;
+  background-position: center;
+  background-repeat: none;
+  background-image: url('../assets/official.svg');
+  background-size: cover;
+}
+
+.loginForm {
+  float: right;
+}
+
+.test {
+/*height: 5000px;*/
+}
+
+/* BUTTON CSS */
+h1 {
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Yellowtail', cursive;
+
+  font-weight: 900;
+  font-size: 8em;
+  color: #fff;
+  text-shadow: 0em 0.05em 0 rgba(0, 0, 0, 0.35);
+}
+
+button {
+  color: #454545;
+  background-color: rgba(255, 255, 255, 0.35);
+  border-width: 2px;
+  border-style: solid;
+  border-color: #454545;
+  position: relative;
+  margin: 1em;
+  padding: 0.5em 1em;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+  position: relative; 
+  bottom: -500px;
+}
+
+button:before,
+button:after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-color: #454545;
+  box-sizing: border-box;
+  border-style: solid;
+  width: 2em; /*1*/
+  transition: all 0.3s ease-in-out;
+}
+
+button:before {
+  top: -6px;
+  left: -6px;
+  border-width: 2px 0 0 2px;
+  z-index: 5;
+}
+
+button:after {
+  bottom: -6px;
+  right: -6px;
+  border-width: 0 2px 2px 0;
+}
+
+button:hover:before,
+button:hover:after {
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  border-color: #fff;
+}
+
+button:hover {
+  color: #353535;
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.panel {
+  max-width: 960px;
+  text-align: center;
+  position: relative;
+  margin: auto;
+}
+
+.borderless button {
+  border-color: rgba(0, 0, 0, 0);
+  color: #999;
+}
+
+.borderless button:hover {
+  border-color: #353535;
+  background-color: transparent;
+  color: #353535;
+}
+
+.borderless button:before,
+.borderless button:after {
+  border-color: transparent;
+}
+
+.borderless button:hover:before,
+.borderless button:hover:after {
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  border-color: #353535;
+}
+
+/* MEDIA QUERY*/
+/* ----------- Non-Retina Screens ----------- */
+@media screen {
+  and (min-width: 1200px)
+  and (max-width: 1600px)
+  and (-webkit-min-pixel-ratio: 1) {
+}
+
+/* ----------- Retina Screens ----------- */
+@media screen
+  and (min-width: 1200px)
+  and (max-width: 1600px)
+  and (-webkit-min-pixel-ratio: 2)
+  and (min-resolution: 192dpi) {
+}
