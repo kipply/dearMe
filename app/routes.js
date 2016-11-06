@@ -98,7 +98,6 @@ module.exports = function(app, passport) {
                  } 
             }
             people = people.sort(sort_by('sentiment', true, parseInt));
-            console.log(people[0].form);
             res.render('profile.pug', {
                 user: req.user,
                 messages: req.flash('info'),
