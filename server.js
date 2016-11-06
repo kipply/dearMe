@@ -1,6 +1,3 @@
-
-
-
 var indico = require('indico.io'); 
 
 indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
@@ -17,9 +14,6 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 var configDB = require('./config/database.js'); 
-
-var answer;
-
 
 mongoose.Promise = global.Promise;
 mongoose.connect(configDB.url); 

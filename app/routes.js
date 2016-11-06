@@ -60,7 +60,7 @@ module.exports = function(app, passport) {
 
             var types = ["", "advocate", "debater", "mediator", "consul", "executive", "adventurer", "logistician", "commander","entrepreneur", "logician", "protagonist", "architect", "campaigner", "entertainer", "defender", "virtuoso"];
 
-var preNum = 234987838769;
+            var preNum = 234987838769;
            for (var i = 0; i < 6; i++) {
                var max = -1;
                var maxName = "";
@@ -78,7 +78,27 @@ var preNum = 234987838769;
                topPersonasVals.push(max);
                preNum = max;
            }
+           var people = []; 
+           for (var i = 0; i < req.user.data.entities.length; i++){
+                if (req.user.data.entities[i].isPerson == true){
+                    people.push(req.user.data.entities[i]);
 
+                }
+           }
+           var sort_by = function(field, reverse, primer){
+
+               var key = primer ? 
+                   function(x) {return primer(x[field])} : 
+                   function(x) {return x[field]};
+
+               reverse = !reverse ? 1 : -1;
+
+               return function (a, b) {
+                   return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+                 } 
+            }
+            people = people.sort(sort_by('sentiment', true, parseInt));
+            console.log(people[0].form);
             res.render('profile.pug', {
                 user: req.user,
                 messages: req.flash('info'),
@@ -86,7 +106,8 @@ var preNum = 234987838769;
                 personasix: topPersonasVals, 
                 legend: topPersonasNames,
                 emotionDataJoy: arr, 
-                dates: datees
+                dates: datees, 
+                people: people
             });     
                 
         });
@@ -134,8 +155,7 @@ var preNum = 234987838769;
         today = new Date()
 
         indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
-        indico.emotion(req.body.entry).then(function(res){
-            console.log(res.joy);     
+        indico.emotion(req.body.entry).then(function(res){   
             newEntry = Entry({
                 userID: req.user._id,
                 entry: {
@@ -178,7 +198,9 @@ var preNum = 234987838769;
                 arr[15] += res.defender; 
                 arr[16] += res.virtuoso;
                 User.update({_id: req.user._id}, {
-                    data:{persona: arr}
+                    data:{
+                        persona: arr
+                    }
                 }, function(err, numberAffected, rawResponse) {
                    //handle it
                 })
@@ -194,47 +216,43 @@ var preNum = 234987838769;
         child.stdin.setEncoding('utf-8');
         child.stdout.pipe(process.stdout);
 
-        child.stdin.write(req.body.entry.replace('\n', "") + "\n");
+        child.stdin.write((req.body.entry.replace("\n", "")).replace(/<(?:.|\n)*?>/gm, "").replace(/(\r\n|\n|\r)/gm,"") + "\n");
         child.stdin.write("EOF\n");
 
         var jsonObj;
         child.stdout.on('data', function (data) {
           jsonObj = JSON.parse(data.toString());
+            var entities = jsonObj.Entities; 
+            var flag;
+            var importantVariable;
+            var importantArray = req.user.data.entities; 
+            var temp;
+            for (var i = 0; i < jsonObj.Entities.length; i++) {
+                importantVariable = jsonObj.Entities[i];
+                flag = false; 
+                for (var j = 0; j < req.user.data.entities.length; j++){
+                    if (importantVariable.form == req.user.data.entities[j].form){
+                        flag = true;
+                        temp =j;
+                    }
+                }
+                if (flag){
+                    importantArray[temp].sentiment += importantVariable.form;
+                } else{
+                    importantArray.push(importantVariable);
+                }
+                    
+            }
+            User.update({_id: req.user._id}, {
+                        data:{
+                            entities: importantArray,
+                            persona: req.user.data.persona
+                        }
+                    }, function(err, numberAffected, rawResponse) {
+                       //handle it
+                    })
         });
 
-        console.log(jsonObj);
-
-
-        // var entities = jsonObj[0];
-
-        // for (var i = 0; i < entities.length; i++) {
-        //     var entity = entities[i];
-
-        //     var curEntities = req.user.data.entities;
-        //     for (var j = 0; j < curEntities.length; j++) {
-        //         var curEntity = curEntities[j];
-        //         if (entity.form === curEntity.form) {
-        //             var curCount = curEntity.count;
-        //             curEntities[j].count = curCount+1;
-        //             User.update({_id: req.user_id}, {
-        //                 data:{entities:curEntities}
-        //             }, function(err, numberAffected, rawResponse){})
-        //         }else{
-        //             var newEntity = {
-        //                 count : 1,
-        //                 form : entity.form,
-        //                 isPerson : entity.isPerson,
-        //                 sentiment : entity.sentiment
-        //             };
-        //             curEntities.push(newEntity);
-        //             User.update({_id: req.user_id}, {
-        //                 data:{entities:curEntities}
-        //             }, function(err, numberAffected, rawResponse){})
-        //         }
-        //     }
-        // }
-
-        // console.log(req.user.data.entities);
         
         req.flash('info', 'Journal sent!');
         res.redirect('/profile')

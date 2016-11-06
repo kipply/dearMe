@@ -99,7 +99,8 @@ html
                 }
               });
         .row
-
+          p=people[0].form
+          p=favPeople
           canvas#personality
             script.
 
@@ -118,7 +119,7 @@ html
                   labels:  actualLegend,
                   datasets : [
                       {
-                          label: "My Mood",
+                          label: "My Personality",
                           data: [#{personasix}],
                           lineTension: 0.1,
                           backgroundColor: "rgba(75,192,192,0.4)",

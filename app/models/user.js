@@ -9,7 +9,12 @@ var userSchema = mongoose.Schema({
         password: String,
     },
     data: {
-    	persona: [],
+    	persona: {type: Array, default: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+      entities:[{
+        form: String, 
+        isPerson: Boolean, 
+        sentiment: Number
+      }]
     }
 });
 
