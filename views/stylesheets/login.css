@@ -23,6 +23,7 @@ h1, h2, p {
   border: 0;
   text-decoration: none;
   outline: none;
+  font-family: Roboto;
 }
 
 html, body {
@@ -59,19 +60,6 @@ h1 {
 	background: #5DC0C6;
 }
 
-form {
-  width: 300px;
-  margin: 0 auto;
-  background: #ff7e68;
-  padding: 10px;
-  border-radius: 10px;
-  position: relative;;
-  padding: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  border-radius: 10px;
-}
 
 form p {
   text-indent: 10px;
@@ -103,23 +91,16 @@ form p {
 }
 
 .send {
-  width: 60px;
-  height: 60px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  border-radius: 50%;
-  position: absolute;
+  font-family: Roboto;
+  width: 75px;
+  padding: 10px;
+  margin: 10px;
   right: 9px;
   top: 20px;
-  border: 5px solid #ff7e68;
   background: #ff5335;
   font-size: 18px;
   color: #fff;
   font-weight: normal;
-  text-shadow: 1px 1px 2px #000;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
 }
 
 .send:hover {

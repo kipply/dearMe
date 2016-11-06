@@ -35,6 +35,7 @@ button {
   border-width: 2px;
   border-style: solid;
   border-color: #454545;
+  color: green;
   position: relative;
   margin: 1em;
   padding: 0.5em 1em;
@@ -42,8 +43,7 @@ button {
   text-align: center;
   font-size: 2em;
   font-weight: bold;
-  position: relative; 
-  bottom: -500px;
+  top: 100px;
 }
 
 button:before,
@@ -93,7 +93,7 @@ button:hover {
 
 .borderless button {
   border-color: rgba(0, 0, 0, 0);
-  color: #999;
+  color: green;
 }
 
 .borderless button:hover {
