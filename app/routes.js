@@ -117,9 +117,18 @@ module.exports = function(app, passport) {
 
         Entry.find({userID: req.user._id}).exec(function(err, entries) {
             if (err) throw err;
+
+            arr.length = entries.length; 
+            datees.length = entries.length;
+            for (i = 0; i < entries.length; i++){
+                datees[i] = "";
+                arr[i] = entries[i].data.emotion;
+                datees[i] = entries[i].date.month+"/"+entries[i].date.date+"/"+entries[i].date.year;
+            }
             res.render('journal.pug', {
                 user:req.user,
-                entries: entries
+                dates: datees,
+                entries: entries,
             });     
         });
 

@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title This is a test, accordions are actually pretty ugly
+    title Journal
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
@@ -17,7 +17,8 @@ html
           |  Journals
         a.btn.btn-default.btn-sm(href='/logout') Logout
         a.btn.btn-default.btn-sm(href='/profile') Profile
-        a.fa.fa-anchor(href='/write') New Entry
+
+        a.btn.btn-default.btn-sm(href='/write') New Entry
       //- each entry in entries
       //-   p=entry
       
@@ -28,7 +29,7 @@ html
           .panel.panel-default
             .panel-heading(id='heading' + i, role='tab')
               h4.panel-title
-                a(role='button', data-toggle='collapse', data-parent='#accordion', href='#collapse' + i, aria-expanded='true', aria-controls='collapse' + i)=entries[i].date
+                a(role='button', data-toggle='collapse', data-parent='#accordion', href='#collapse' + i, aria-expanded='true', aria-controls='collapse' + i)=dates[i]
             .panel-collapse.collapse(id='collapse' + i, role='tabpanel', aria-labelledby'heading' + i)
               .panel-body!=entries[i].entry.html
         - }
