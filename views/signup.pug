@@ -1,36 +1,32 @@
 doctype html
 html
   head
-    title Sign Up! 
+    title Sign Up
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
     // load bootstrap css
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
     // load fontawesome
-    style.
-      body        { padding-top:80px; }
+    link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
+
+    link(href='https://fonts.googleapis.com/css?family=Yellowtail', rel='stylesheet')
+    link(rel='stylesheet', href='stylesheets/signup.css')
+    link(rel='icon', href='assets/favicon.ico')
   body
-    .container
-      .col-sm-6.col-sm-offset-3
-        h1
-          span.fa.fa-sign-in
-          |  Signup
-        // show any messages that come back with authentication
-        if message.length > 0
-          .alert.alert-danger=message
-        // LOGIN FORM
-        form(action='/signup', method='post')
-          .form-group
-            label Email
-            input.form-control(type='text', name='email')
-          .form-group
-            label Password
-            input.form-control(type='password', name='password')
-          button.btn.btn-warning.btn-lg(type='submit') Signup
-        hr
+    .main-wrap
+      .dearMe
+        h1 DearMe
+        h2 
+          i.fa.fa-lock(aria-hidden='true') 
+          |  Register
+        br
+        br
+      if message.length > 0
+        .alert.alert-danger=message
+      form.login-main(action='/signup', method='post')
+        input.box1.border1(type='text', placeholder='Email', name='email')
+        input.box1.border2(type='password', placeholder='Password', name='password')
+        input.send(type='submit', value='Go')
+        br
         p
-          | Already have an account? 
-          a(href='/login') Login
-        p
-          | Or go 
-          a(href='/') home
-          | .
+          |Already have an account? 
+          a(href='/login') Login here.

@@ -6,29 +6,29 @@ html
     // load bootstrap css
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
     // load fontawesome
+
+    link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
+
+    link(href='https://fonts.googleapis.com/css?family=Yellowtail', rel='stylesheet')
+
+    link(rel='stylesheet', href='stylesheets/login.css')
+    link(rel='icon', href='assets/favicon.ico')
   body
-    .container
-      .col-sm-6.col-sm-offset-3
-        h1
-          span.fa.fa-sign-in
+    .main-wrap
+      .dearMe
+        h1 DearMe
+        h2 
+          i.fa.fa-sign-in(aria-hidden='true') 
           |  Login
-        // show any messages that come back with authentication
+        br
+
         if message.length > 0
           .alert.alert-danger=message
-        // LOGIN FORM
-        form(action='/login', method='post')
-          .form-group
-            label Email
-            input.form-control(type='text', name='email')
-          .form-group
-            label Password
-            input.form-control(type='password', name='password')
-          button.btn.btn-warning.btn-lg(type='submit') Login
-        hr
-        p
-          | Need an account? 
-          a(href='/signup') Signup
-        p
-          | Or go 
-          a(href='/') home
-          | .
+        br
+      form.login-main(action='/login', method='post')
+        input.box1.border1(type='text', placeholder='Email', name='email')
+        input.box1.border2(type='password', placeholder='Password', name='password')
+        input.send(type='submit', value='Go')
+        br
+        a(href='./index.html')
+          p Forgot password? Click here.
