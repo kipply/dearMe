@@ -25,15 +25,16 @@ html
         .col-sm-6
           .well
             h3 Your favourite people
-            p=people[0].form
+            if typeof(people[5]) !== 'undefined'
+              p=people[0].form
 
-            p=people[1].form
+              p=people[1].form
 
-            p=people[2].form
+              p=people[2].form
 
-            p=people[3].form
+              p=people[3].form
 
-            p=people[4].form
+              p=people[4].form
         .col-sm-6
 
           h3 Mood

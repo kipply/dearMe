@@ -2,8 +2,6 @@ html, body{
   height: 100%;
   width: 100%;
   background-color: #C2C2F0;
-  background: linear-gradient(262deg, #C2C2F0, #f0c2c2, #c2d9f0, #C2C2F0);
-  background-size: 400% 400%;
 }
 
 form {
