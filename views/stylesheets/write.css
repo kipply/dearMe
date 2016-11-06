@@ -4,9 +4,6 @@ html, body{
   background-color: #C2C2F0;
   background: linear-gradient(262deg, #C2C2F0, #f0c2c2, #c2d9f0, #C2C2F0);
   background-size: 400% 400%;
-  -webkit-animation: colorChange 16s ease infinite;
-  -moz-animation: colorChange 16s ease infinite;
-  animation: colorChange 16s ease infinite;
 }
 
 form {
@@ -52,20 +49,4 @@ h1 {
   text-align: center;
   padding-top: 10%;
   color: #fff;
-}
-
-@-webkit-keyframes colorChange {
-    0%{background-position:0% 43%}
-    50%{background-position:100% 58%}
-    100%{background-position:0% 43%}
-}
-@-moz-keyframes colorChange {
-    0%{background-position:0% 43%}
-    50%{background-position:100% 58%}
-    100%{background-position:0% 43%}
-}
-@keyframes colorChange {
-    0%{background-position:0% 43%}
-    50%{background-position:100% 58%}
-    100%{background-position:0% 43%}
 }
