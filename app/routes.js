@@ -21,6 +21,7 @@ module.exports = function(app, passport) {
             console.log(year);
             console.log(entry);
 
+
         });
         res.render('index.pug');
     });
@@ -38,7 +39,7 @@ module.exports = function(app, passport) {
             datees = []; 
             booparr = [];
             legend = []; 
-            console.log(req.user.data.persona);
+
             
             Entry.find({userID: req.user._id}).exec(function(err, entries) {
 
@@ -51,39 +52,43 @@ module.exports = function(app, passport) {
             }
             arr = arr.reverse();
             if (err) throw err;
-            res.render('profile.pug', {
-                user: req.user,
-                messages: req.flash('info'),
-                entries: entries,
-                personasix: booparr, 
-                legend: legend,
-                emotionDataJoy: arr, 
-                dates: datees
-            });     
-                
            
-            var personasDB = req.user.data.personas;
+            var personasDB = req.user.data.persona;
 
             var topPersonasVals = [];
             var topPersonasNames = [];
 
-            var types = ["", "advocate", "debater", "mediator", "consul", "executive", "adventurer", "logistician", "commander",
-            "entrepreneur", "logician", "protagonist", "architect", "campaigner", "entertainer", "defender", "virtuoso"];
+            var types = ["", "advocate", "debater", "mediator", "consul", "executive", "adventurer", "logistician", "commander","entrepreneur", "logician", "protagonist", "architect", "campaigner", "entertainer", "defender", "virtuoso"];
 
-            var preNum = -1;
-            for (var i = 0; i < 6; i++) {
-                var max = -1;
-                var maxName = "";
-                for (var j = 1; j <= personasDB.length; j++) {
-                    if (personasDB[j]>max&&personasDB[j]<=preNum) {
-                        max = personasDB[j];
-                        maxName = types[j];
-                    }
-                }
-                topPersonasNames.push(maxName);
-                topPersonasVals.push(max);
-                preNum = max;
-            }
+var preNum = 234987838769;
+           for (var i = 0; i < 6; i++) {
+               var max = -1;
+               var maxName = "";
+               var maxInd = -1;
+               for (var j = 1; j < personasDB.length; j++) {
+                   if (i==0&&j==i) {preNum=personasDB[j]}
+                   if (personasDB[j]>max&&personasDB[j]<=preNum) {
+                       max = personasDB[j];
+                       maxName = types[j];
+                       maxInd = j;
+                   }
+               }
+               personasDB[maxInd] = -10;
+               topPersonasNames.push(maxName);
+               topPersonasVals.push(max);
+               preNum = max;
+           }
+
+            res.render('profile.pug', {
+                user: req.user,
+                messages: req.flash('info'),
+                entries: entries,
+                personasix: topPersonasVals, 
+                legend: topPersonasNames,
+                emotionDataJoy: arr, 
+                dates: datees
+            });     
+                
         });
 
     });
@@ -155,7 +160,6 @@ module.exports = function(app, passport) {
 
             indico.personas(req.body.entry).then(function(res){
                 arr = req.user.data.persona;
-                console.log(arr);
                 arr[0]++; 
                 arr[1] += res.advocate;
                 arr[2] += res.debater; 
@@ -178,19 +182,19 @@ module.exports = function(app, passport) {
                 }, function(err, numberAffected, rawResponse) {
                    //handle it
                 })
-                console.log(arr)
             })
 
         )
         
-        
+
+
         var spawn = require('child_process').spawn;
         child = spawn('java', ['-jar', 'SentimentCore.jar']);
 
         child.stdin.setEncoding('utf-8');
         child.stdout.pipe(process.stdout);
 
-        child.stdin.write(req.body.entry + "\n");
+        child.stdin.write(req.body.entry.replace('\n', "") + "\n");
         child.stdin.write("EOF\n");
 
         var jsonObj;
@@ -198,37 +202,41 @@ module.exports = function(app, passport) {
           jsonObj = JSON.parse(data.toString());
         });
 
-        var entities = jsonObj.Entities;
+        console.log(jsonObj);
 
-        for (var i = 0; i < entities.length; i++) {
-            var entity = entities[i];
 
-            var curEntities = req.user.data.entities;
-            for (var j = 0; j < curEntities.length; j++) {
-                var curEntity = curEntities[j];
-                if (entity.form === curEntity.form) {
-                    var curCount = curEntity.count;
-                    curEntities[j].count = curCount+1;
-                    User.update({_id: req.user_id}, {
-                        data:{entities:curEntities}
-                    }, function(err, numberAffected, rawResponse){})
-                }else{
-                    var newEntity = {
-                        count : 1,
-                        form : entity.form,
-                        isPerson : entity.isPerson,
-                        sentiment : entity.sentiment
-                    };
-                    curEntities.push(newEntity);
-                    User.update({_id: req.user_id}, {
-                        data:{entities:curEntities}
-                    }, function(err, numberAffected, rawResponse){})
-                }
-            }
-        }
+        // var entities = jsonObj[0];
 
+        // for (var i = 0; i < entities.length; i++) {
+        //     var entity = entities[i];
+
+        //     var curEntities = req.user.data.entities;
+        //     for (var j = 0; j < curEntities.length; j++) {
+        //         var curEntity = curEntities[j];
+        //         if (entity.form === curEntity.form) {
+        //             var curCount = curEntity.count;
+        //             curEntities[j].count = curCount+1;
+        //             User.update({_id: req.user_id}, {
+        //                 data:{entities:curEntities}
+        //             }, function(err, numberAffected, rawResponse){})
+        //         }else{
+        //             var newEntity = {
+        //                 count : 1,
+        //                 form : entity.form,
+        //                 isPerson : entity.isPerson,
+        //                 sentiment : entity.sentiment
+        //             };
+        //             curEntities.push(newEntity);
+        //             User.update({_id: req.user_id}, {
+        //                 data:{entities:curEntities}
+        //             }, function(err, numberAffected, rawResponse){})
+        //         }
+        //     }
+        // }
+
+        // console.log(req.user.data.entities);
         
-        req.flash('info', 'Flash is back!');
+        req.flash('info', 'Journal sent!');
         res.redirect('/profile')
 
     });
