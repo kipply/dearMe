@@ -156,5 +156,6 @@ html
                 }
               });
 
-      form(action = '/inspire', method = 'post')
-        button(type='submit') Inspire!
+        if user.data.entities.length > 0
+          form(action = '/inspire', method = 'post')
+            button(type='submit') Inspire!
