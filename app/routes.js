@@ -133,6 +133,54 @@ module.exports = function(app, passport) {
     });
 
 
+    app.post('/inspire', isLoggedIn, function(req, res) {
+
+        'use strict';
+
+        var google = require('googleapis');
+
+        var customsearch = google.customsearch('v1');
+
+       var interests = []; 
+       for (var i = 0; i < req.user.data.entities.length; i++){
+            if (req.user.data.entities[i].isPerson != true){
+                interests.push(req.user.data.entities[i]);
+
+            }
+       }
+       var sort_by = function(field, reverse, primer){
+
+           var key = primer ? 
+               function(x) {return primer(x[field])} : 
+               function(x) {return x[field]};
+
+           reverse = !reverse ? 1 : -1;
+
+           return function (a, b) {
+               return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+             } 
+        }
+            interests = interests.sort(sort_by('sentiment', true, parseInt));
+        const CX = '010121651302582544090:8h0szinltrc';
+        const API_KEY = 'AIzaSyBw2thKTXlGCGRKK0c1eVRfpR7ine-vbNY';
+        const SEARCH = interests[0].form;
+
+        customsearch.cse.list({ cx: CX, q: SEARCH, auth: API_KEY }, function (err, resp) {
+          if (err) {
+            return console.log('An error occured', err);
+          }
+          // Got the response from custom search
+          console.log('Result: ' + resp.searchInformation.formattedTotalResults);
+          if (resp.items && resp.items.length > 0) {
+            console.log('First result name is ' + resp.items[0].link);
+          }
+
+            req.flash('info', 'Hey there! This link might interest you; '+ resp.items[0].link);
+            res.redirect('/profile');
+        });
+
+    });
+
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');

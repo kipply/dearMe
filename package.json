@@ -19,6 +19,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
+    "googleapis": "^14.1.0",
     "indico.io": "^0.10.5",
     "method-override": "^2.3.6",
     "mongoose": "^4.6.5",

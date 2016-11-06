@@ -24,23 +24,19 @@ html
         // LOCAL INFORMATION
         .col-sm-6
           .well
-            h3
-              span.fa.fa-user
-              |  Local
-            p
-              strong id
-              | : 
-              span=user.id
-              br
-              strong email
-              | : 
-              span=user.local.email
-              br
-              strong password
-              | : 
-              span=user.local.password
+            h3 Your favourite people
+            p=people[0].form
+
+            p=people[1].form
+
+            p=people[2].form
+
+            p=people[3].form
+
+            p=people[4].form
         .col-sm-6
 
+          h3 Mood
           canvas#mood
             script.
 
@@ -99,8 +95,8 @@ html
                 }
               });
         .row
-          p=people[0].form
-          p=favPeople
+
+          h3 Myer Briggs Personality
           canvas#personality
             script.
 
@@ -158,3 +154,6 @@ html
                   },
                 }
               });
+
+      form(action = '/inspire', method = 'post')
+        button(type='submit') Inspire!

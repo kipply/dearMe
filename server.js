@@ -1,6 +1,4 @@
 var indico = require('indico.io'); 
-
-indico.apiKey = 'ab83001ca5c484aa92fc18a5b2d6585c';
 var express = require('express'); 
 var app = express(); 
 var port = process.env.PORT || 8000; 
@@ -36,3 +34,4 @@ require('./config/passport')(passport);
 
 app.listen(port); 
 console.log('Listening of port' + port); 
+
