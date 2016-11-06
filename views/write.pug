@@ -24,22 +24,3 @@ html
     form(action = '/submitEntry', method = 'post')
       textarea(name='entry')
       button(type='submit') Send
-doctype html
-html
-  head
-    title Journals
-    link(rel='icon', href='assets/favicon.ico')
-    link(rel='stylesheet', href='stylesheets/write.css')
-    script(src='http://cdn.tinymce.com/4/tinymce.min.js')
-    script.
-      tinymce.init({ selector:'textarea' });
-  body
-    .container
-      div
-        h1 Journals
-        .btn
-          a(href='/profile') Profile
-          a(href='/logout') Logout
-    form(action='/submitEntry', method='post')
-      textarea(name='entry')
-      button(type='submit') Send!
